@@ -1,0 +1,9 @@
+[http.services]
+  [http.services.deny.loadBalancer]
+    [[http.services.deny.loadBalancer.servers]]
+      url = "http://deny.invalid:123/"
+
+[http.routers]
+  [http.routers.deny]
+    rule = "PathPrefix(`/api/internal`)"
+    service = "deny"

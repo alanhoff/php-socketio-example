@@ -1,0 +1,9 @@
+[http.services]
+  [http.services.chat.loadBalancer]
+    [[http.services.chat.loadBalancer.servers]]
+      url = "http://chat:8080/"
+
+[http.routers]
+  [http.routers.chat]
+    rule = "PathPrefix(`/`)"
+    service = "chat"

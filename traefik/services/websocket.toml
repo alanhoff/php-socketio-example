@@ -1,0 +1,17 @@
+[http.services]
+  [http.services.websocket.loadBalancer]
+    [http.services.whoami1.loadBalancer.sticky.cookie]
+    [[http.services.websocket.loadBalancer.servers]]
+      url = "http://websocket:8080/"
+
+[http.routers]
+  [http.routers.websocket]
+    rule = "PathPrefix(`/ws`)"
+    middlewares = ["strip-ws-path", "add-ws-path"]
+    service = "websocket"
+
+[http.middlewares]
+  [http.middlewares.strip-ws-path.stripPrefix]
+    prefixes = ["/ws"]
+  [http.middlewares.add-ws-path.addPrefix]
+    prefix = "/socket.io"

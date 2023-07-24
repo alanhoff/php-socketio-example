@@ -1,0 +1,24 @@
+services:
+  redis:
+    image: redis:7-alpine
+  websocket:
+    build: ./websocket
+    environment:
+      - REDIS_URI=redis://redis:6379
+    depends_on:
+      - redis
+  chat:
+    build: ./chat
+    environment:
+      - APP_DEBUG=false
+    depends_on:
+      - redis
+  gateway:
+    image: traefik:v2.10
+    volumes:
+      - type: bind
+        source: ./traefik
+        target: /etc/traefik
+    ports:
+      - 8080:8080
+      - 8081:8081
